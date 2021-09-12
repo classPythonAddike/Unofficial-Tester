@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 	"net/http"
-	"time"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/httprate"
+	// "github.com/go-chi/chi/v5"
+	// "github.com/go-chi/chi/v5/middleware"
+	// "github.com/go-chi/httprate"
 )
 
 func main() {
+	/*
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -22,8 +22,21 @@ func main() {
 	})
 
 	r.Get("/testing", RunFile)
+	*/
 
-	err := http.ListenAndServe(":3000", r)
+	http.HandleFunc(
+		"/",
+		func(w http.ResponseWriter, r *http.Request) {
+			WriteMessage(&w, message_from_yan, http.StatusOK)
+		},
+	)
+
+	http.Handle(
+		"/run-test",
+		Logger(http.HandlerFunc(RunFile)),
+	)
+
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

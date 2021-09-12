@@ -3,29 +3,33 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
+	"time"
 )
 
-var message_from_yan = `
-<h1>A Quick Message From YanTovis</h1> -
+var message_from_yan = strings.Replace(
+	`
+<h2>A Quick Message From YanTovis</h2>
 
-How to use?
-Import your solution in line 92, and run this script
-If you see some weird chars instead of colors in output or don't want colors
-switch COLOR_OUT to False in line 30
-
-WARNING: My tester ignores printing in input() but official tester FAILS if you
+<strong>WARNING</strong>: My tester ignores printing in input() but official tester FAILS if you
         print something in input()
         Don't do that: input("What is the test number?")
         Use empty input: input()
 
 Some possible errors:
-    - None in "Your output": Your solution didn't print for all cases.
-    - None in "Input": Your solution print more times then there is cases.
-    - If you see None in "Input" or "Your output" don't check other cases until
+<ul>
+    <li> None in "Your output": Your solution didn't print for all cases.</li>
+    <li> None in "Input": Your solution print more times then there is cases.</li>
+    <li> If you see None in "Input" or "Your output" don't check other cases until.
         you fix problem with printing, cos "Input" and "Your output" are misaligned
-        after first missing/extra print
-    - StopIteration: Your solution try to get more input then there is test cases
-`
+        after first missing/extra print.</li>
+    <li> StopIteration: Your solution try to get more input then there is test cases.</li>
+</ul>
+`,
+	"\n",
+	"<br>",
+	-1,
+)
 
 func WriteMessage(w *http.ResponseWriter, message string, code int) {
 	(*w).WriteHeader(code)
@@ -34,4 +38,16 @@ func WriteMessage(w *http.ResponseWriter, message string, code int) {
 	if err != nil {
 		log.Printf("Error while writing message `%v` - %v\n", message, err)
 	}
+}
+
+func Logger(next http.Handler) http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			next.ServeHTTP(w, r)
+			t1 := time.Now()
+			next.ServeHTTP(w, r)
+			t2 := time.Now()
+			log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
+		},
+	)
 }
