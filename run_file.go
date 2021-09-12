@@ -9,10 +9,8 @@ import (
 	gwb "github.com/classPythonAddike/gowandbox"
 )
 
-var maxFileSize int64 = 1 // 1 MB is the max file size file size
-
 func RunFile(w http.ResponseWriter, r *http.Request) {
-	_ = r.ParseMultipartForm(maxFileSize << 20)
+	_ = r.ParseMultipartForm(1 << 20) // 1 MB is the max file size file size
 
 	file, _, err := r.FormFile("file")
 
@@ -46,7 +44,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 
 	// ---- Testing the file on WandBox ----
 
-	tester_code, err := ioutil.ReadFile("tester.py")
+	testerCode, err := ioutil.ReadFile("tester.py")
 	if err != nil {
 		WriteMessage(
 			&w,
@@ -55,7 +53,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		)
 	}
 
-	test_cases, err := ioutil.ReadFile("test_cases.py")
+	testCases, err := ioutil.ReadFile("test_cases.py")
 	if err != nil {
 		WriteMessage(
 			&w,
@@ -64,22 +62,22 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		)
 	}
 
-	prog := gwb.NewGWBProgram()
-	prog.Code = string(tester_code)
-	prog.Compiler = "cpython-3.8.0"
+	program := gwb.NewGWBProgram()
+	program.Code = string(testerCode)
+	program.Compiler = "cpython-3.8.0"
 
-	prog.Codes = []gwb.Program{
+	program.Codes = []gwb.Program{
 		{
 			"solution.py",
 			content,
 		},
 		{
 			"test_cases.py",
-			string(test_cases),
+			string(testCases),
 		},
 	}
 
-	result, err := prog.Execute(120000) // 120s timeout
+	result, err := program.Execute(120000) // 120s timeout
 
 	if err != nil {
 		WriteMessage(
