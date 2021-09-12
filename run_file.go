@@ -18,8 +18,8 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		WriteMessage(
 			&w,
 			"Error while reading file! Please make sure you uploaded it under the name `file`!",
-			http.StatusBadRequest,
 		)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -32,13 +32,12 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		WriteMessage(
 			&w,
 			"Error while reading file!",
-			http.StatusInternalServerError,
 		)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	content := buf.String()
-	// WriteMessage(&w, content, http.StatusOK)
 
 	buf.Reset()
 
@@ -49,8 +48,9 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		WriteMessage(
 			&w,
 			"Whoops! Looks like the tester hasn't been uploaded! Please ping @class PythonAddike to remind him.",
-			http.StatusInternalServerError,
 		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	testCases, err := ioutil.ReadFile("test_cases.py")
@@ -58,12 +58,14 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		WriteMessage(
 			&w,
 			"Whoops! Looks like the testcases haven't been uploaded! Please ping @class PythonAddike to remind him.",
-			http.StatusNonAuthoritativeInfo,
 		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	program := gwb.NewGWBProgram()
 	program.Code = string(testerCode)
+	program.Options = "warning"
 	program.Compiler = "cpython-3.8.0"
 
 	program.Codes = []gwb.Program{
@@ -83,13 +85,13 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		WriteMessage(
 			&w,
 			"Error while making request to WandBox! -" + err.Error(),
-			http.StatusInternalServerError,
 		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	WriteMessage(
 		&w,
 		result.ProgramMessage,
-		http.StatusOK,
 	)
 }

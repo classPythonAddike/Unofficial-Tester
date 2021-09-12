@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc(
 		"/",
 		func(w http.ResponseWriter, r *http.Request) {
-			WriteMessage(&w, message_from_yan, http.StatusOK)
+			WriteMessage(&w, message_from_yan)
 		},
 	)
 

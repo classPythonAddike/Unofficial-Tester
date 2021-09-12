@@ -31,8 +31,7 @@ Some possible errors:
 	-1,
 )
 
-func WriteMessage(w *http.ResponseWriter, message string, code int) {
-	(*w).WriteHeader(code)
+func WriteMessage(w *http.ResponseWriter, message string) {
 	_, err := (*w).Write([]byte(message))
 
 	if err != nil {
@@ -43,7 +42,6 @@ func WriteMessage(w *http.ResponseWriter, message string, code int) {
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			next.ServeHTTP(w, r)
 			t1 := time.Now()
 			next.ServeHTTP(w, r)
 			t2 := time.Now()

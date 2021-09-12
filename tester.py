@@ -106,8 +106,6 @@ def test_challenge_70(input: Callable) -> None:
             print(f"   Expected: {green}{exp}{reset}")
         else:
             passed += 1
-    if passed == i:
-        print(*output, sep="\n")
     print(f"\nPassed: {green if passed == i else red}{passed}/{i}{reset} tests")
     print(f"Finished in: {yellow}{end - start:.4f}{reset} seconds")
 
