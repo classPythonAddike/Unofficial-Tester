@@ -70,11 +70,11 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 
 	program.Codes = []gwb.Program{
 		{
-			"solution.py",
+			"to_submit_ch_" + ch_no + ".py",
 			content,
 		},
 		{
-			"test_cases.py",
+			"test_cases_" + ch_no + ".py",
 			string(testCases),
 		},
 	}
@@ -84,7 +84,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		WriteMessage(
 			&w,
-			"Error while making request to WandBox! -" + err.Error(),
+			"Error while making request to WandBox! -"+err.Error(),
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return

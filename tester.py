@@ -6,7 +6,7 @@ switch COLOR_OUT to False in line 30
 
 WARNING: My tester ignores printing in input() but official tester FAILS if you
         print something in input()
-        Don't do that: input("What is the test number?")
+        Don't do that: input("What is the test number?") 
         Use empty input: input()
 
 Some possible errors:
@@ -25,7 +25,7 @@ from time import perf_counter
 from typing import Callable
 from unittest import mock
 from io import StringIO
-from test_cases import test_inp
+from test_cases_71 import test_inp, test_out
 
 COLOR_OUT = True
 
@@ -71,7 +71,7 @@ class Capturing(list):
 
 
 @mock.patch("builtins.input", side_effect=[str(len(test_inp))] + test_inp)
-def test_challenge_70(input: Callable) -> None:
+def test_challenge_71(input: Callable) -> None:
     color_out = COLOR_OUT and enable_win_term_mode()
 
     red, green, yellow, cyan, reset = (
@@ -89,16 +89,14 @@ def test_challenge_70(input: Callable) -> None:
     with Capturing() as output:
         start = perf_counter()
 
-        import solution  # change this to your file name with solution without .py extension
+        import to_submit_ch_71  # change this to your file name with solution without .py extension
 
         end = perf_counter()
 
     from pprint import pprint
-    from base64 import b64decode
 
     passed = i = 0
-    for i, (out, inp) in enumerate(zip_longest(output, test_inp), 1):
-        exp = str(b64decode(inp), "ascii")
+    for i, (out, inp, exp) in enumerate(zip_longest(output, test_inp, test_out), 1):
         if out != exp:
             print(f"Test nr:{i}\n      Input: {cyan}")
             pprint(inp)
@@ -106,9 +104,10 @@ def test_challenge_70(input: Callable) -> None:
             print(f"   Expected: {green}{exp}{reset}")
         else:
             passed += 1
+
     print(f"\nPassed: {green if passed == i else red}{passed}/{i}{reset} tests")
     print(f"Finished in: {yellow}{end - start:.4f}{reset} seconds")
 
 
 if __name__ == "__main__":
-    test_challenge_70()
+    test_challenge_71()

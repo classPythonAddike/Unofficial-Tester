@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-var message_from_yan = strings.Replace(
+var ch_no = "71"
+
+var message_from_yan = "<h1>Challenge " + ch_no + "</h1>" + strings.Replace(
 	`
 <h2>A Quick Message From YanTovis</h2>
 
