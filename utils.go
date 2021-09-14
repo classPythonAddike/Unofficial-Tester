@@ -63,12 +63,10 @@ func WriteMessage(w *http.ResponseWriter, message string) {
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			go func() {
-				t1 := time.Now()
-				next.ServeHTTP(w, r)
-				t2 := time.Now()
-				log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
-			}()
+			t1 := time.Now()
+			next.ServeHTTP(w, r)
+			t2 := time.Now()
+			log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
 		},
 	)
 }
