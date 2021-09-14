@@ -9,8 +9,27 @@ import (
 
 var ch_no = "71"
 
-var message_from_yan = "<h1>Challenge " + ch_no + "</h1>" + strings.Replace(
+var message_from_yan = `<head>
+	<title>Unofficial Tester</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js" integrity="sha512-nvWJ2DdGeQzxIYP5eo2mqC+kXLYlH4QZ/AWYZ/yDc5EqM74jiC5lxJ+8d+6zI/H9MlsIIjrJsaRTgLtvo+Jy6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>` +
+	"<h1>Challenge " + ch_no + "</h1>" + strings.Replace(
 	`
+<h2>Usage:</h2>
+Use the following code to test your solution -
+<pre><code class="language-python">
+import requests
+
+resp = requests.get(
+	"https://addike-tester.herokuapp.com/run-test",
+	files = {
+		"file": open("solution.py", "r") # Change this to your file name
+	}
+)
+
+print(resp.text)
+</code></pre>
+
 <h2>A Quick Message From YanTovis</h2>
 
 <strong>WARNING</strong>: My tester ignores printing in input() but official tester FAILS if you
@@ -44,10 +63,12 @@ func WriteMessage(w *http.ResponseWriter, message string) {
 func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			t1 := time.Now()
-			next.ServeHTTP(w, r)
-			t2 := time.Now()
-			log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
+			go func() {
+				t1 := time.Now()
+				next.ServeHTTP(w, r)
+				t2 := time.Now()
+				log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
+			}()
 		},
 	)
 }
