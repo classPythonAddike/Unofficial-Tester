@@ -73,6 +73,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 			"to_submit_ch_" + ch_no + ".py",
 			content,
 		},
+
 		{
 			"test_cases_" + ch_no + ".py",
 			string(testCases),

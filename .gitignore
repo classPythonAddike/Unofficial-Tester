@@ -2,3 +2,6 @@ main
 *.exe
 
 .idea
+.env
+client.py
+__pycache__
