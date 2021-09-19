@@ -1,7 +1,7 @@
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
-github.com/classPythonAddike/gowandbox v0.0.0-20210828120457-dad4f0169e01 h1:LKkCBkERktJDKmJHJlPpyRIEWyQc5aMspH81l2nCRxE=
-github.com/classPythonAddike/gowandbox v0.0.0-20210828120457-dad4f0169e01/go.mod h1:OCm6YbliyIjApI5P25cxoPFe96PMYQEGG78vu+YEE3g=
+github.com/classPythonAddike/gowandbox v0.0.0-20210919103202-55553f51225c h1:W6vmX9JxKbZLH4BemfIloVKJ3y+IQ2wiukAd+h96lzk=
+github.com/classPythonAddike/gowandbox v0.0.0-20210919103202-55553f51225c/go.mod h1:OCm6YbliyIjApI5P25cxoPFe96PMYQEGG78vu+YEE3g=
 github.com/go-chi/chi/v5 v5.0.4 h1:5e494iHzsYBiyXQAHHuI4tyJS9M3V84OuX3ufIIGHFo=
 github.com/go-chi/chi/v5 v5.0.4/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
 github.com/go-chi/httprate v0.5.1 h1:1iORteW3jMf4GkGFHff0pXWRQU4l2BfohndyihGhXeE=

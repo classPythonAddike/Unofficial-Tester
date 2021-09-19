@@ -2,9 +2,11 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	gwb "github.com/classPythonAddike/gowandbox"
 )
@@ -80,7 +82,10 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	result, err := program.Execute(120000) // 120s timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	defer cancel()
+
+	result, err := program.Execute(ctx) // 60s timeout
 
 	if err != nil {
 		WriteMessage(
