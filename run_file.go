@@ -82,7 +82,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	result, err := program.Execute(ctx) // 60s timeout
