@@ -4,4 +4,5 @@ main
 .idea
 .env
 client.py
+cut_short.py
 __pycache__

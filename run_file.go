@@ -77,7 +77,7 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		},
 
 		{
-			"test_cases_" + ch_no + ".py",
+			"test_cases_ch_" + ch_no + ".py",
 			string(testCases),
 		},
 	}
@@ -88,6 +88,16 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 	result, err := program.Execute(ctx) // 60s timeout
 
 	if err != nil {
+
+		if err.Error() == "" {
+			WriteMessage(
+				&w,
+				"Wandbox returned an ratelimit error while trying to run your code. Please try again in a few minutes!",
+			)
+			w.WriteHeader(http.StatusTooManyRequests)
+			return
+		}
+
 		WriteMessage(
 			&w,
 			"Error while making request to WandBox! -"+err.Error(),
@@ -95,6 +105,11 @@ func RunFile(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	WriteMessage(
+		&w,
+		"Note - this weeks testcases have been reduced to 1500 in number, from 5001, due to WandBox not allowing large files. If you want to run all 5000 cases, download the tester from  Yan's Github - https://github.com/Pomroka/TWT_Challenges_Tester \n\n",
+	)
 
 	WriteMessage(
 		&w,

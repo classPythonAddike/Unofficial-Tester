@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var ch_no = "71"
+var ch_no = "72"
 
 var message_from_yan = `<head>
 	<title>Unofficial Tester</title>

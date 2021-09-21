@@ -12,7 +12,7 @@ WARNING: My tester ignores printing in input() but official tester FAILS if you
 Some possible errors:
     - None in "Your output": Your solution didn't print for all cases.
     - None in "Input": Your solution print more times then there is cases.
-    - If you see None in "Input" or "Your output" don't check other cases until
+    - If you see None in "Input" or "Your output" don't check failed cases until
         you fix problem with printing, cos "Input" and "Your output" are misaligned
         after first missing/extra print
     - StopIteration: Your solution try to get more input then there is test cases
@@ -25,7 +25,7 @@ from time import perf_counter
 from typing import Callable
 from unittest import mock
 from io import StringIO
-from test_cases_71 import test_inp, test_out
+from test_cases_ch_72 import test_inp, test_out
 
 COLOR_OUT = True
 
@@ -70,8 +70,8 @@ class Capturing(list):
         sys.stdout = self._stdout
 
 
-@mock.patch("builtins.input", side_effect=[str(len(test_inp))] + test_inp)
-def test_challenge_71(input: Callable) -> None:
+@mock.patch("builtins.input", side_effect=[str(len(test_out))] + test_inp)
+def test_challenge_72(input: Callable) -> None:
     color_out = COLOR_OUT and enable_win_term_mode()
 
     red, green, yellow, cyan, reset = (
@@ -89,7 +89,7 @@ def test_challenge_71(input: Callable) -> None:
     with Capturing() as output:
         start = perf_counter()
 
-        import to_submit_ch_71  # change this to your file name with solution without .py extension
+        import to_submit_ch_72  # change this to your file name with solution without .py extension
 
         end = perf_counter()
 
@@ -101,13 +101,13 @@ def test_challenge_71(input: Callable) -> None:
             print(f"Test nr:{i}\n      Input: {cyan}")
             pprint(inp)
             print(f"{reset}Your output: {red}{out}{reset}")
-            print(f"   Expected: {green}{exp}{reset}")
+            print(f"   Expected: {green}{exp}{reset}\n")
         else:
             passed += 1
 
-    print(f"\nPassed: {green if passed == i else red}{passed}/{i}{reset} tests")
+    print(f"Passed: {green if passed == i else red}{passed}/{i}{reset} tests")
     print(f"Finished in: {yellow}{end - start:.4f}{reset} seconds")
 
 
 if __name__ == "__main__":
-    test_challenge_71()
+    test_challenge_72()
